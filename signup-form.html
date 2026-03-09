@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup-form</title>
+    <link rel="stylesheet" href="css/signup.css">
+</head>
+<body>
+
+    <div class="container">
+        <marquee direction="left" speed="5">Welcome to community pulse nyeri sign up form</marquee>
+        
+        <div class="sub-container">
+            <div id="errorMessage" class="error-message"></div>
+            <div id="successMessage" class="success-message"></div>
+            
+            <div>
+                <label style="margin-right: 47px;" for="name">Name</label>
+                <input class="inputts" type="text" id="name" name="name" required>
+            </div>
+
+            <div>
+                <label style="margin-right: 35px;" for="email">Email</label>
+                <input class="inputts" type="email" id="email" name="email" required>
+            </div>
+
+            <div>
+                <label for="password">Password</label>
+                <input class="inputts" type="password" id="password" name="password" required>
+            </div>
+
+            <div style="display: flex;">
+                <input class="check" type="checkbox" name="agreeToTerms" id="agreeToTerms">
+                <label for="agreeToTerms">I agree to the terms and conditions</label>
+            </div>
+
+            <div style="display: flex; justify-content: space-between; margin-top: 15px;"> 
+                <button id="signupBtn">Sign Up</button>
+                <button onclick="window.location.href='signin.html'">Sign in</button>
+                <button onclick="window.location.href='homepage.html'">Continue without account</button>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { signUp } from './scripts/auth.js';
+
+        const signupBtn = document.getElementById('signupBtn');
+        const nameInput = document.getElementById('name');
+        const emailInput = document.getElementById('email');
+        const passwordInput = document.getElementById('password');
+        const agreeCheckbox = document.getElementById('agreeToTerms');
+        const errorMessage = document.getElementById('errorMessage');
+        const successMessage = document.getElementById('successMessage');
+
+        signupBtn.addEventListener('click', async (e) => {
+            e.preventDefault();
+
+            // Clear previous messages
+            errorMessage.style.display = 'none';
+            successMessage.style.display = 'none';
+            errorMessage.textContent = '';
+            successMessage.textContent = '';
+
+            // Validate inputs
+            const name = nameInput.value.trim();
+            const email = emailInput.value.trim();
+            const password = passwordInput.value;
+
+            if (!name) {
+                showError('Please enter your name');
+                return;
+            }
+
+            if (!email) {
+                showError('Please enter your email');
+                return;
+            }
+
+            if (!password || password.length < 6) {
+                showError('Password must be at least 6 characters');
+                return;
+            }
+
+            if (!agreeCheckbox.checked) {
+                showError('Please agree to the terms and conditions');
+                return;
+            }
+
+            // Disable button during request
+            signupBtn.disabled = true;
+            signupBtn.classList.add('loading');
+
+            // Call sign up function
+            const { user, error, message } = await signUp(email, password, name);
+
+            signupBtn.disabled = false;
+            signupBtn.classList.remove('loading');
+
+            if (error) {
+                showError(error);
+            } else {
+                if (message) {
+                    // Email confirmation required
+                    showSuccess(message + '. You will be redirected shortly.');
+                    setTimeout(() => {
+                        window.location.href = 'signin.html';
+                    }, 3000);
+                } else {
+                    // Auto-confirmed, redirect to homepage
+                    showSuccess('Account created successfully! Redirecting...');
+                    setTimeout(() => {
+                        window.location.href = 'homepage.html';
+                    }, 2000);
+                }
+            }
+        });
+
+        function showError(message) {
+            errorMessage.textContent = message;
+            errorMessage.style.display = 'block';
+        }
+
+        function showSuccess(message) {
+            successMessage.textContent = message;
+            successMessage.style.display = 'block';
+        }
+    </script>
+</body>
+</html>

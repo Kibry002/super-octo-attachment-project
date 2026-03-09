@@ -1,0 +1,120 @@
+
+body{
+display:flex;
+justify-content:center;
+align-items:center;
+margin:0;
+min-height:100vh;
+background-image:url("photos/nyeri3.png");
+background-repeat:no-repeat;
+background-size:cover;
+background-position:center;
+}
+
+.container{
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+width:850px;
+height:500px;
+background-color:rgba(255,255,255,0.2);
+border-radius:10px;
+padding:10px;
+font-family:monospace;
+font-size:20px;
+}
+
+.sub-container{
+margin:auto;
+background-color:rgb(0,53,113);
+width:auto;
+padding:20px;
+border-radius:8px;
+color:white;
+}
+
+.inputts{
+padding:10px;
+border-radius:5px;
+border:1px solid #ccc;
+width:100%;
+box-sizing:border-box;
+margin-bottom:15px;
+}
+
+button{
+padding:10px 20px;
+border-radius:5px;
+border:none;
+background-color:#0ba1c3;
+color:white;
+font-size:16px;
+cursor:pointer;
+margin-bottom:20px;
+}
+
+.sign-in{
+background-color:#0a8caa;
+width:200px;
+}
+
+.divider{
+display:flex;
+align-items:center;
+gap:10px;
+margin:15px 0;
+}
+
+.divider hr{
+flex:1;
+border:none;
+height:1px;
+background:white;
+}
+
+.divider span{
+font-size:14px;
+white-space:nowrap;
+}
+
+.icons-container{
+display:flex;
+justify-content:center;
+align-items:center;
+gap:25px;
+margin-top:10px;
+}
+
+.icons-container i{
+font-size:22px;
+cursor:pointer;
+}
+
+.signup-text{
+text-align:center;
+font-size:16px;
+margin-top:15px;
+}
+.sup{
+    color: black;
+}
+
+.error-message {
+color: #ff6b6b;
+font-size: 14px;
+margin-bottom: 10px;
+display: none;
+}
+
+.success-message {
+color: #51cf66;
+font-size: 14px;
+margin-bottom: 10px;
+display: none;
+}
+
+.loading {
+opacity: 0.6;
+cursor: not-allowed;
+}

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sign-form</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="stylesheet" href="css/signin.css">
+</head>
+
+<body>
+
+<div class="container">
+
+<marquee direction="left">Welcome to community pulse nyeri sign in form</marquee>
+
+<div class="sub-container">
+<div id="errorMessage" class="error-message"></div>
+<div id="successMessage" class="success-message"></div>
+
+<div>
+<label style="margin-right:47px;" for="email">Email</label>
+<input class="inputts" type="email" id="email" name="email" required>
+</div>
+
+<div>
+<label for="password">Password</label>
+<input class="inputts" type="password" id="password" name="password" required>
+</div>
+
+<div style="display:flex; justify-content:center;">
+<button id="signinBtn" class="sign-in">Sign in</button>
+</div>
+
+<div class="divider">
+<hr>
+<span>Sign in with</span>
+<hr>
+</div>
+
+<div class="icons-container">
+<i class="fa-brands fa-google"></i>
+<i class="fa-brands fa-facebook"></i>
+<i class="fa-brands fa-twitter"></i>
+</div>
+
+<p class="signup-text">
+Don't have an account? <strong class="sup" ><a href="signup-form.html">Sign up</a></strong>
+</p>
+
+</div>
+
+<script type="module">
+import { signIn } from './scripts/auth.js';
+
+const signinBtn = document.getElementById('signinBtn');
+const emailInput = document.getElementById('email');
+const passwordInput = document.getElementById('password');
+const errorMessage = document.getElementById('errorMessage');
+const successMessage = document.getElementById('successMessage');
+
+signinBtn.addEventListener('click', async (e) => {
+    e.preventDefault();
+
+    // Clear previous messages
+    errorMessage.style.display = 'none';
+    successMessage.style.display = 'none';
+    errorMessage.textContent = '';
+    successMessage.textContent = '';
+
+    // Validate inputs
+    const email = emailInput.value.trim();
+    const password = passwordInput.value;
+
+    if (!email) {
+        showError('Please enter your email');
+        return;
+    }
+
+    if (!password) {
+        showError('Please enter your password');
+        return;
+    }
+
+    // Disable button during request
+    signinBtn.disabled = true;
+    signinBtn.classList.add('loading');
+
+    // Call sign in function
+    const { user, session, error } = await signIn(email, password);
+
+    signinBtn.disabled = false;
+    signinBtn.classList.remove('loading');
+
+    if (error) {
+        showError(error);
+    } else {
+        showSuccess('Sign in successful! Redirecting...');
+        setTimeout(() => {
+            window.location.href = 'homepage.html';
+        }, 2000);
+    }
+});
+
+function showError(message) {
+    errorMessage.textContent = message;
+    errorMessage.style.display = 'block';
+}
+
+function showSuccess(message) {
+    successMessage.textContent = message;
+    successMessage.style.display = 'block';
+}
+</script>
+
+</div>
+
+</body>
+</html>
