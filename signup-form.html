@@ -38,13 +38,14 @@
             <div style="display: flex; justify-content: space-between; margin-top: 15px;"> 
                 <button id="signupBtn">Sign Up</button>
                 <button onclick="window.location.href='signin.html'">Sign in</button>
-                <button onclick="window.location.href='homepage.html'">Continue without account</button>
+                <button onclick="window.location.href='homepage/homepage.html'">Continue without account</button>
             </div>
         </div>
     </div>
 
     <script type="module">
         import { signUp } from './scripts/auth.js';
+        import { supabase } from './supabase/index.js';
 
         const signupBtn = document.getElementById('signupBtn');
         const nameInput = document.getElementById('name');
@@ -93,7 +94,7 @@
             signupBtn.classList.add('loading');
 
             // Call sign up function
-            const { user, error, message } = await signUp(email, password, name);
+            const { user, error, message, session } = await signUp(email, password, name);
 
             signupBtn.disabled = false;
             signupBtn.classList.remove('loading');
@@ -108,10 +109,18 @@
                         window.location.href = 'signin.html';
                     }, 3000);
                 } else {
-                    // Auto-confirmed, redirect to homepage
+                    // Auto-confirmed, create profile and redirect to homepage
+                    if (user && session) {
+                        await supabase.from('profiles').upsert({
+                            user_id: user.id,
+                            full_name: name,
+                            email: email,
+                            updated_at: new Date().toISOString(),
+                        });
+                    }
                     showSuccess('Account created successfully! Redirecting...');
                     setTimeout(() => {
-                        window.location.href = 'homepage.html';
+                        window.location.href = 'homepage/homepage.html';
                     }, 2000);
                 }
             }

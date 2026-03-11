@@ -52,6 +52,7 @@ Don't have an account? <strong class="sup" ><a href="signup-form.html">Sign up</
 
 <script type="module">
 import { signIn } from './scripts/auth.js';
+import { supabase } from './supabase/index.js';
 
 const signinBtn = document.getElementById('signinBtn');
 const emailInput = document.getElementById('email');
@@ -95,9 +96,18 @@ signinBtn.addEventListener('click', async (e) => {
     if (error) {
         showError(error);
     } else {
+        if (user && session) {
+            const fullName = user.user_metadata?.full_name || '';
+            await supabase.from('profiles').upsert({
+                user_id: user.id,
+                full_name: fullName,
+                email: user.email || email,
+                updated_at: new Date().toISOString(),
+            });
+        }
         showSuccess('Sign in successful! Redirecting...');
         setTimeout(() => {
-            window.location.href = 'homepage.html';
+            window.location.href = 'homepage/homepage.html';
         }, 2000);
     }
 });

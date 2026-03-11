@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Share an Update</title>
+    <link rel="stylesheet" href="upload.css">
+  </head>
+  <body>
+    <div class="app">
+      <header>
+        <h1>Share an Update</h1>
+        <div class="sub">Share what’s happening in the community, and add photos or files if you’d like.</div>
+        <div class="pill"><a href="../homepage.html">Home</a> · <code>/api/posts</code></div>
+      </header>
+
+      <main class="row">
+        <section class="panel">
+          <h2>New update</h2>
+          <label>
+            Type
+            <select id="type">
+              <option value="story">Story</option>
+              <option value="alert">Alert</option>
+              <option value="update">Announcement</option>
+              <option value="other">Market</option>
+              <option value="jobs">Jobs</option>
+              <option value="events">Events</option>
+            </select>
+          </label>
+          <div style="height: 10px"></div>
+          <label>
+            Headline
+            <input id="title" type="text" maxlength="140" placeholder="e.g. Water outage in Kiganjo" />
+          </label>
+          <div style="height: 10px"></div>
+          <label for="visibility">Who should see this?</label>
+          <select name="visibility-select" id="visibility">
+            <option value="public">Public</option>
+            <option value="private">Anonymous</option>
+          </select>
+          <label>
+            Details (optional)
+            <textarea id="body" placeholder="Add details, updates, or helpful context for neighbors…"></textarea>
+          </label>
+
+        
+
+          <div class="actions">
+            <button class="primary" id="publishBtn" type="button">Share update</button>
+            <button class="danger" id="resetBtn" type="button">Clear form</button>
+              <button style="background-color: burlywood;" onclick="window.location.href = ('/homepage/homepage.html')" class="go-home">Go To Homepage</button>
+            <span class="note" id="publishStatus"></span>
+          </div>
+
+          <div style="height: 12px"></div>
+
+          <div class="drop" id="drop" tabindex="0" aria-label="Attachment drop zone">
+            <div class="drop-top">
+              <div>
+                <div>Attachments</div>
+                <div class="hint">Add photos or files to help others understand the update.</div>
+              </div>
+              <div class="actions">
+                <label class="btn" for="fileInput">Choose files</label>
+                <button id="clearBtn" type="button" disabled>Clear list</button>
+              
+              </div>
+            </div>
+            <input id="fileInput" type="file" multiple />
+            <div class="files" id="queue"></div>
+            <div class="note" id="emptyQueue" style="margin-top: 10px">No files added yet.</div>
+          </div>
+        </section>
+
+        <section class="panel">
+          <h2>Recent updates</h2>
+          <div class="note" style="margin-bottom: 10px">Saved locally in <code>data/posts.json</code>.</div>
+          <div class="posts" id="posts"></div>
+          <div class="note" id="emptyPosts">No updates yet.</div>
+        </section>
+      </main>
+    </div>
+
+   <script type="module" src="upload.js"></script>
+  </body>
+</html>

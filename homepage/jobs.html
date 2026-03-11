@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="css/homepage.css">
+    <title>Nyeri Jobs news centre</title>
+    <!-- Keep page-specific overrides local -->
+    <style>
+
+    </style>
+</head>
+<body>
+
+    <section class="profile-modal">
+        <div class="top-div">
+            <div class="image-container">
+                  <img class="profile---image" src="../photos/placeholder-profile.webp" alt="this is your profile picture" class="profile-image">
+                 
+            </div>
+            <div class="user">
+                 <p>Hi user</p>
+            </div>
+            
+            <div class="bottom-div">
+                    <input class="file-upload" type="file" name="upload-image" id="image-upload" accept="image/*">
+                    <input class="name-email" type="text" name="profile-name" id="profile-name" placeholder="Enter your name">
+                    <input class="name-email" type="email" name="profile-email" id="profile-email" placeholder="Enter your email">
+                    <div style="display: flex; gap: 10px; margin-bottom: 20px;" class="updateAndExit">
+                           <button class="update-profile">Update Profile</button>
+                    <button class="update-profile exit">Exit</button>
+
+                    </div>
+                 
+            </div>
+          
+          
+        </div>
+      
+    </section>
+
+    <section class="story-modal" aria-hidden="true">
+        <div class="story-modal__overlay" data-close="true"></div>
+        <div class="story-modal__panel" role="dialog" aria-modal="true" aria-labelledby="storyTitle">
+            <div class="story-modal__header">
+                <h2 id="storyTitle">Full story</h2>
+                <button class="story-modal__close" type="button" aria-label="Close">Close</button>
+            </div>
+            <div class="story-modal__source">
+                <img class="news-source-card--image story-modal__avatar" src="../photos/source-profile.webp" alt="">
+                <div class="author-name-container">
+                    <h3 class="author-name story-modal__author">Community update</h3>
+                    <p class="timestamp story-modal__time">Just now</p>
+                </div>
+            </div>
+            <div class="story-modal__type">Feed type: <span class="span-type story-modal__tag">Update</span></div>
+            <div class="story-modal__image-wrap">
+                <img class="story-modal__image" src="" alt="">
+            </div>
+            <p class="story-modal__body"></p>
+        </div>
+    </section>
+
+    <div class="sidebar-overlay"></div>
+
+    <section class="sidebar">
+        <div class="profile-infor">
+
+            <img class="profile-infor--images" src="../photos/nyeriCommun.png" alt="">
+            <img class="profile-infor--images" src="../photos/placeholder-profile.webp" alt="">
+
+            <p class="name--profile">John Doe</p>
+            <p class="username--profile">@johndoe</p>
+        </div>
+
+                <div class="feeds-div nav-item" data-route="homepage.html"><h3><i class="fa-solid fa-house"></i>Home</h3></div>
+                <div class="feeds-div nav-item" data-route="announcements.html"><h3><i class="fa-solid fa-bullhorn"></i>Announcements</h3></div>
+                <div class="feeds-div nav-item" data-route="alerts.html"><h3><i class="fa-solid fa-triangle-exclamation"></i>Alerts</h3></div>
+                <div class="feeds-div nav-item" data-route="events.html"><h3><i class="fas fa-calendar"></i>Events</h3></div>
+                <div class="feeds-div nav-item" data-route="stories.html"><h3><i class="fa-brands fa-instagram"></i>Stories</h3></div>
+                <div class="feeds-div nav-item" data-route="trends.html"><h3><i class="fa-solid fa-arrow-trend-up"></i>Markets</h3></div>
+                <div class="feeds-div nav-item active" data-route="jobs.html"><h3><i class="fa-solid fa-briefcase"></i>Jobs</h3></div>
+                <div class="feeds-div nav-item" data-route="../about.html"><h3><i class="fa-solid fa-circle-info"></i>About</h3></div>
+                <div class="feeds-div nav-item" data-route="../contacts.html"><h3><i class="fa-solid fa-address-book"></i>Contacts</h3></div>
+    </section>
+
+    <section class="feeds-section">
+        <div class="mobile-topbar">
+            <div class="ham-upload">
+            <button class="hamburger" aria-label="Open menu"><i class="fa-solid fa-bars"></i></button>
+            <div class="small-screen-catch">
+                <marquee behavior="scroll" scrollamount="7" direction="left">Catch all the latest trending updates from Nyeri</marquee>
+            </div>
+            
+            <button class="upload--button">Upload an Update</button>
+
+            </div>
+
+            <h3 class="mobile-title">Feeds</h3>
+            
+          
+        </div>
+        <div class="heead-div">
+
+                <div class="feeds-section--head">
+              <h3>Feeds</h3>
+                <div class="desktop-topbar">
+                   
+                            <div class="catch-latest">
+                                <marquee behavior="scroll" scrollamount="7" direction="left"> Catch all the latest trending updates from nyeri</marquee>
+                           
+                    
+
+                  
+
+
+                    </div>
+                
+                    <div class="upload-desktop">
+                        <button class="upload--button">Upload an Update</button>
+                    </div>
+                   
+
+            </div>
+               
+              <div class="tabs-row">
+              <h3 class="inactive-tabs nav-item" data-route="homepage.html">Home</h3>
+              <h3 class="inactive-tabs nav-item" data-route="announcements.html">Announcements</h3>
+              <h3 class="inactive-tabs nav-item" data-route="alerts.html">Alerts</h3>
+              <h3 class="inactive-tabs nav-item" data-route="events.html">Events</h3>
+              <h3 class="inactive-tabs nav-item" data-route="stories.html">Stories</h3>
+              <h3 class="inactive-tabs nav-item" data-route="trends.html">Markets</h3>
+              <h3 class="active-tab nav-item" data-route="jobs.html">Jobs</h3>
+              </div>
+        </div>
+
+        </div>
+
+        <div class="feeds-scroll">
+            <!-- Posts render here -->
+        </div>
+    </section>
+    <script type="module" src="scripts/homepage.js"></script>
+</body>
+</html>
