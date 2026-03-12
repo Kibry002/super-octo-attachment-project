@@ -271,7 +271,11 @@ const loadPosts = async () => {
   const page = window.location.pathname.split("/").pop();
   const typeFilter = pageTypeMap[page];
 
-  let query = supabase.from("Posts").select("*").order("created_at", { ascending: false });
+  let query = supabase
+    .from("Posts")
+    .select("*")
+    .eq("status", "approved")
+    .order("created_at", { ascending: false });
   if (typeFilter) {
     query = query.eq("type", typeFilter);
   }
@@ -442,9 +446,11 @@ const initStoryModal = () => {
           .delete()
           .eq("post_id", postId)
           .eq("author_uid", currentUserId);
-        if (!error) {
-          card.remove();
+        if (error) {
+          window.alert("Delete failed. Please try again.");
+          return;
         }
+        card.remove();
         return;
       }
       const likeBtn = event.target.closest(".likes-count");

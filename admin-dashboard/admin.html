@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="admin.css">
+    <title>Admin Dashboard</title>
+</head>
+<body>
+    <div class="sidebar-overlay"></div>
+    <button class="hamburger" aria-label="Open menu"><i class="fa-solid fa-bars"></i></button>
+    <aside class="sidebar">
+        <div class="profile-infor">
+            <img class="profile-infor--images" src="../photos/nyeriCommun.png" alt="Site logo">
+            <img class="profile-infor--images" src="../photos/placeholder-profile.webp" alt="Admin profile">
+            <p class="name--profile">Admin</p>
+            <p class="username--profile">@admin</p>
+        </div>
+
+        <div class="feeds-div nav-item active"><h3><i class="fa-solid fa-house"></i>Home</h3></div>
+        <div class="feeds-div nav-item"><h3><i class="fa-solid fa-bullhorn"></i>Announcements</h3></div>
+        <div class="feeds-div nav-item"><h3><i class="fa-solid fa-triangle-exclamation"></i>Alerts</h3></div>
+        <div class="feeds-div nav-item"><h3><i class="fas fa-calendar"></i>Events</h3></div>
+        <div class="feeds-div nav-item"><h3><i class="fa-brands fa-instagram"></i>Stories</h3></div>
+        <div class="feeds-div nav-item"><h3><i class="fa-solid fa-arrow-trend-up"></i>Markets</h3></div>
+        <div class="feeds-div nav-item"><h3><i class="fa-solid fa-briefcase"></i>Jobs</h3></div>
+    </aside>
+
+    <main class="content">
+        <div class="heead-div">
+            <h2>Admin Dashboard</h2>
+        </div>
+
+        <div class="tabs-row">
+            <h3 class="active-tab">Home</h3>
+            <h3 class="inactive-tabs">Announcements</h3>
+            <h3 class="inactive-tabs">Alerts</h3>
+            <h3 class="inactive-tabs">Events</h3>
+            <h3 class="inactive-tabs">Stories</h3>
+            <h3 class="inactive-tabs">Markets</h3>
+            <h3 class="inactive-tabs">Jobs</h3>
+        </div>
+
+        <section class="feeds-scroll">
+            <!-- Pending posts render here -->
+        </section>
+    </main>
+    <script type="module">
+        import { supabase } from '../supabase/index.js';
+
+        const hamburger = document.querySelector('.hamburger');
+        const overlay = document.querySelector('.sidebar-overlay');
+        const body = document.body;
+
+        if (hamburger) {
+            hamburger.addEventListener('click', () => {
+                body.classList.toggle('sidebar-open');
+            });
+        }
+        if (overlay) {
+            overlay.addEventListener('click', () => {
+                body.classList.remove('sidebar-open');
+            });
+        }
+
+        const feeds = document.querySelector('.feeds-scroll');
+        const typeLabels = {
+            story: 'Stories',
+            alert: 'Alerts',
+            update: 'Announcements',
+            other: 'Markets',
+            jobs: 'Jobs',
+            events: 'Events',
+        };
+
+        const renderCard = (post) => {
+            const card = document.createElement('div');
+            card.className = 'news-card';
+            card.dataset.postId = post.post_id;
+
+            const source = document.createElement('div');
+            source.className = 'news-source-card';
+
+            const img = document.createElement('img');
+            img.className = 'news-source-card--image';
+            img.src = post.author_photo || '../photos/placeholder-profile.webp';
+            img.alt = '';
+
+            const author = document.createElement('div');
+            author.className = 'author-name-container';
+
+            const name = document.createElement('h3');
+            name.className = 'author-name';
+            name.textContent = post.author_name || 'Anonymous';
+
+            const time = document.createElement('p');
+            time.className = 'timestamp';
+            time.textContent = post.created_at
+                ? new Date(post.created_at).toLocaleDateString()
+                : '';
+
+            author.appendChild(name);
+            author.appendChild(time);
+            source.appendChild(img);
+            source.appendChild(author);
+
+            const description = document.createElement('div');
+            description.className = 'feed-description';
+            description.innerHTML = `Feed type: <span class="span-type">${typeLabels[post.type] || post.type || 'Update'}</span>`;
+
+            const bodyText = document.createElement('p');
+            bodyText.className = 'actual-description';
+            bodyText.textContent = post.body || post.title || '';
+            description.appendChild(bodyText);
+
+            const imageWrap = document.createElement('div');
+            imageWrap.className = 'feed-image-div';
+            const readMore = document.createElement('span');
+            readMore.className = 'read-more';
+            readMore.textContent = 'Read More';
+            imageWrap.appendChild(readMore);
+            if (post.image_url) {
+                const postImg = document.createElement('img');
+                postImg.className = 'feed-image';
+                postImg.src = post.image_url;
+                postImg.alt = '';
+                imageWrap.appendChild(postImg);
+            }
+
+            const actions = document.createElement('div');
+            actions.className = 'views-like-emoji admin-actions';
+
+            const views = document.createElement('p');
+            views.innerHTML = `<i class="fa-regular fa-eye"></i>${post.views || 0} views`;
+            const likes = document.createElement('p');
+            likes.innerHTML = `<i class="fa-regular fa-heart"></i>${post.likes || 0} likes`;
+
+            const moderation = document.createElement('div');
+            moderation.className = 'moderation-actions';
+
+            const approve = document.createElement('button');
+            approve.className = 'approve-btn';
+            approve.textContent = 'Approve update';
+
+            const reject = document.createElement('button');
+            reject.className = 'reject-btn';
+            reject.textContent = 'Reject update';
+
+            moderation.appendChild(approve);
+            moderation.appendChild(reject);
+
+            actions.appendChild(views);
+            actions.appendChild(likes);
+            actions.appendChild(moderation);
+
+            card.appendChild(source);
+            card.appendChild(description);
+            card.appendChild(imageWrap);
+            card.appendChild(actions);
+
+            return card;
+        };
+
+        const loadPending = async () => {
+            if (!feeds) return;
+            const { data, error } = await supabase
+                .from('Posts')
+                .select('*')
+                .eq('status', 'pending')
+                .order('created_at', { ascending: false });
+            if (error) return;
+            feeds.innerHTML = '';
+            (data || []).forEach((post) => {
+                feeds.appendChild(renderCard(post));
+            });
+        };
+
+        if (feeds) {
+            feeds.addEventListener('click', async (event) => {
+                const approve = event.target.closest('.approve-btn');
+                const reject = event.target.closest('.reject-btn');
+                const card = event.target.closest('.news-card');
+                const postId = card?.dataset?.postId;
+                if (!postId) return;
+
+                if (approve) {
+                    await supabase.from('Posts').update({ status: 'approved' }).eq('post_id', postId);
+                    card.remove();
+                }
+                if (reject) {
+                    await supabase.from('Posts').update({ status: 'rejected' }).eq('post_id', postId);
+                    card.remove();
+                }
+            });
+        }
+
+        loadPending();
+    </script>
+</body>
+</html>

@@ -268,6 +268,7 @@
             author_name: authorName,
             author_photo: authorPhoto,
             author_uid: currentUser.id,
+            status: "pending",
           };
 
           const { error } = await supabase.from("Posts").insert(postPayload);

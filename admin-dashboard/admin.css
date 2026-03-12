@@ -1,0 +1,257 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: monospace;
+    background-color: #f4f6f8;
+    display: flex;
+    min-height: 100vh;
+    color: #1f2933;
+}
+
+.sidebar-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.35);
+    display: none;
+    z-index: 8;
+}
+
+.hamburger {
+    display: none;
+    position: fixed;
+    top: 16px;
+    left: 16px;
+    border: none;
+    background-color: #e0e0e0;
+    padding: 8px 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 18px;
+    color: #333;
+    z-index: 9;
+}
+
+.sidebar {
+    width: 320px;
+    background-color: lightskyblue;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    transition: left 0.2s ease-in-out;
+}
+
+.profile-infor {
+    text-align: center;
+    padding: 10px 0 20px;
+}
+
+.profile-infor--images {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.name--profile {
+    margin: 8px 0 0;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.username--profile {
+    margin: 4px 0 0;
+    color: #4b5563;
+    font-size: 14px;
+}
+
+.feeds-div {
+    background-color: #e0e0e0;
+    border-radius: 10px;
+    padding: 10px 12px;
+    cursor: pointer;
+}
+
+.feeds-div.active {
+    background-color: #9a8b8b;
+}
+
+.feeds-div h3 {
+    margin: 0;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.content {
+    flex: 1;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.heead-div {
+    background-color: #646064;
+    color: white;
+    padding: 12px 16px;
+    border-radius: 8px;
+}
+
+.heead-div h2 {
+    margin: 0;
+    font-size: 22px;
+}
+
+.tabs-row {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.tabs-row h3 {
+    margin: 0;
+    font-size: 14px;
+    padding: 6px 10px;
+    border-radius: 6px;
+    background: #ececec;
+}
+
+.tabs-row .active-tab {
+    background: #d0d0d0;
+    font-weight: bold;
+}
+
+.news-card {
+    background-color: #ddd3d3;
+    border-radius: 10px;
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.news-source-card {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background-color: #fff9f9;
+    border-radius: 8px;
+    padding: 8px;
+}
+
+.news-source-card--image {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.author-name-container h3 {
+    margin: 0;
+    font-size: 16px;
+}
+
+.timestamp {
+    margin: 2px 0 0;
+    font-size: 12px;
+    color: gray;
+}
+
+.feed-description h4 {
+    margin: 0 0 6px;
+}
+
+.span-type {
+    background-color: rgb(184, 30, 184);
+    color: white;
+    padding: 2px 6px;
+    border-radius: 5px;
+}
+
+.feed-image-div {
+    position: relative;
+}
+
+.feed-image {
+    width: 100%;
+    border-radius: 8px;
+    display: block;
+}
+
+.read-more {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    font-size: 12px;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.6);
+    padding: 4px 8px;
+    border-radius: 6px;
+}
+
+.views-like-emoji {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.moderation-actions {
+    margin-left: auto;
+    display: flex;
+    gap: 8px;
+}
+
+.approve-btn,
+.reject-btn {
+    border: 1px solid #9ca3af;
+    border-radius: 8px;
+    padding: 6px 10px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.approve-btn {
+    background-color: #86efac;
+}
+
+.reject-btn {
+    background-color: #fca5a5;
+}
+
+@media (max-width: 900px) {
+    body {
+        flex-direction: column;
+    }
+    .sidebar {
+        position: fixed;
+        top: 0;
+        left: -100%;
+        width: 80%;
+        max-width: 320px;
+        height: 100vh;
+        z-index: 10;
+        flex-direction: column;
+        flex-wrap: nowrap;
+    }
+    .sidebar-open .sidebar {
+        left: 0;
+    }
+    .sidebar-open .sidebar-overlay {
+        display: block;
+    }
+    .hamburger {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .content {
+        padding: 16px;
+        margin-top: 56px;
+    }
+}
