@@ -25,14 +25,16 @@
           linear-gradient(180deg, rgba(135, 206, 250, 0.15), rgba(255, 255, 255, 0)) no-repeat,
           var(--bg);
         padding: 28px 16px;
+        background-image: url(../photos/nyeri3.png);
       }
 
       .app {
         width: min(1050px, 100%);
+        background-color:rgb(0,53,113);
         margin: 0 auto;
         border: 1px solid #cfe7f6;
         border-radius: 16px;
-        background: var(--panel);
+        /* background: var(--panel); */
         box-shadow: var(--shadow);
         overflow: hidden;
       }
