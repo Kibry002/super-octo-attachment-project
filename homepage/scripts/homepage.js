@@ -389,6 +389,7 @@ const initStoryModal = () => {
   const storyBody = storyModal?.querySelector(".story-modal__body");
   const storyImageWrap = storyModal?.querySelector(".story-modal__image-wrap");
   const storyImage = storyModal?.querySelector(".story-modal__image");
+  const storyAvatar = storyModal?.querySelector(".story-modal__avatar");
 
   const openStoryModal = (card) => {
     if (!storyModal || !card) return;
@@ -397,12 +398,17 @@ const initStoryModal = () => {
     const type = card.querySelector(".span-type")?.textContent?.trim() || "Update";
     const body = card.querySelector(".actual-description")?.textContent?.trim() || "";
     const img = card.querySelector(".feed-image");
+    const authorImg = card.querySelector(".news-source-card--image");
 
     if (storyTitle) storyTitle.textContent = "Full story";
     if (storyAuthor) storyAuthor.textContent = author;
     if (storyTime) storyTime.textContent = time;
     if (storyTag) storyTag.textContent = type;
     if (storyBody) storyBody.textContent = body;
+    if (storyAvatar && authorImg) {
+      storyAvatar.src = authorImg.getAttribute("src") || PLACEHOLDER_PROFILE;
+      storyAvatar.alt = authorImg.getAttribute("alt") || "";
+    }
 
     if (storyImageWrap && storyImage) {
       if (img && img.getAttribute("src")) {

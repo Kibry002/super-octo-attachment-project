@@ -276,7 +276,7 @@
             throw new Error(error.message || "Publish failed.");
           }
 
-          publishStatus.textContent = "Published.";
+          publishStatus.textContent = "Your update has been sent successfully, please wait for admin verification and validation.";
           resetForm();
           await refreshPosts();
         } catch (err) {
